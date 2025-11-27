@@ -1,19 +1,29 @@
-properties([
-  pipelineTriggers([
-    pollSCM('', [
-      includeregions: 'service_2/.*'
-    ])
-  ])
-])
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage("build")
-        {
+
+    options {
+        skipDefaultCheckout(true)
+    }
+
+    triggers {
+        githubPush()     // GitHub webhook trigger
+    }
+
+  stages{
+        stage("checkout"){
             steps{
-                echo "Building the project 2..."
+            echo "code checkout"
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'bhavanachoudhari24', url: 'https://github.com/bhavanachoudhari24/Multiple-pipeline.git']])
+            echo "code checkout successful-11"
+        }}
+
+        stage('Build Only If service_2 Changed') {
+            when {
+                changeset "service_2/**"
+            }
+            steps {
+                echo "Building the project 3 because service_2 changed..."
             }
         }
     }
-
 }
