@@ -25,5 +25,11 @@ pipeline {
                 echo "Building the project 3 because service_3 changed..."
             }
         }
+            stage('Skip logic') {
+            when { not { changeset "service_3/**" } }
+            steps {
+                echo "No changes in service_3 — pipeline will end"
+            }
+    }
     }
 }
