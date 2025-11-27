@@ -14,7 +14,7 @@ pipeline {
             steps{
             echo "code checkout"
             checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'bhavanachoudhari24', url: 'https://github.com/bhavanachoudhari24/Multiple-pipeline.git']])
-            echo "code checkout successful-"
+            echo "code checkout successful-11"
         }}
 
         stage('Build Only If service_1 Changed') {
@@ -25,5 +25,10 @@ pipeline {
                 echo "Building the project 1 because service_1 changed..."
             }
         }
+         stage('Skip logic') {
+            when { not { changeset "service_1/**" } }
+            steps {
+                echo "No changes in service_1 — pipeline will end"
+            }
     }
 }
