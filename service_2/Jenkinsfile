@@ -1,3 +1,10 @@
+properties([
+  pipelineTriggers([
+    pollSCM('', [
+      includeregions: 'service_2/.*'
+    ])
+  ])
+])
 pipeline{
     agent any
     stages{
@@ -5,11 +12,6 @@ pipeline{
         {
             steps{
                 echo "Building the project 2..."
-                extensions {
-                        // Only trigger build if files under service_1/ changed
-                        relativeTargetDirectory('service_2')
-                        includedRegions('service_2/.*')
-                    }
             }
         }
     }
