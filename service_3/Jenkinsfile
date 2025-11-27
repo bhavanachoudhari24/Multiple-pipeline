@@ -5,6 +5,11 @@ pipeline{
         {
             steps{
                 echo "Building the project 3..."
+                extensions {
+                        // Only trigger build if files under service_1/ changed
+                        relativeTargetDirectory('service_3')
+                        includedRegions('service_3/.*')
+                    }
             }
         }
     }
