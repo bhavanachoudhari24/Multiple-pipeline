@@ -22,7 +22,7 @@ pipeline {
                 changeset "service_1/**"
             }
             steps {
-                echo "Building the project 3 because service_1 changed..."
+                echo "Building the project 1 because service_1 changed..."
             }
         }
     }
